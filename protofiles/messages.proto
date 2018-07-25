@@ -3,35 +3,69 @@ package protofiles;
 
 import "google/api/annotations.proto";
 
+option csharp_namespace = "Blk-io.Protobuf.Messages";
+option go_package = "github.com/blk-io/chimera-api";
+option java_package = "com.blk-io.chimera-api";
+option java_outer_classname = "Protofiles";
+option java_multiple_files = true;
+option objc_class_prefix = "BPB";
+
+// `messages` contains serialized protocol buffer messages used to communicate with Crux nodes
+// The gRPC service definitions using the below proto files are defined in
+// `github.com/blk-io/chimera-api/grpc.proto` -- Refer to the same for example usage
+
+// The Apiversion on which the server is running
 message ApiVersion{
     string version = 1;
 }
+
+// The Upcheck response from the server when used in `upcheck` is called
 message UpCheckResponse{
     string message = 1;
 }
+
+// The request to be sent to server to add a transaction
 message SendRequest{
+    // The payload of the transaction to be sent
     bytes payload = 1;
+    // The key of the Sender
     string from = 2;
+    // The keys of all the Receipients
     repeated string to = 3;
 }
+// Response from the server for the SendRquest
 message SendResponse{
+    // The transaction hash is returned
     bytes key = 1;
 }
+
+// The Request Query to the server to Receive transaction
 message ReceiveRequest{
+    // The transaction hash to be queried
     bytes key = 1;
+    // The Senders key
     string to = 2;
 }
+// Response for ReceiveRequest -> contains the transaction payload
 message ReceiveResponse{
     bytes payload = 1;
 }
+
+// The information regarding the node
 message PartyInfo{
+    // the URL identifying this node
     string url = 1;
+    // public key of the respective URL
     map<string, bytes> recipients = 2;
+    // All the URLs opf the connected nodes
     map<string, bool> parties = 3;
 }
+// Payload consisting of the partyinfo of the connected party
 message PartyInfoResponse{
     bytes payload = 1;
 }
+
+// The Encrypted payload used to Push the new transaction payload to other Crux nodes
 message EncryptedPayload{
     bytes sender = 1;
     bytes cipherText = 2;
@@ -39,7 +73,9 @@ message EncryptedPayload{
     repeated bytes reciepientBoxes = 4;
     bytes reciepientNonce = 5;
 }
+// The message type to sent over to other Crux nodes.
 message PushPayload{
     EncryptedPayload ep = 1;
+    // Encoded transaction information
     bytes encoded = 2;
 }

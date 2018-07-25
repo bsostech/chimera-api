@@ -4,15 +4,28 @@ package protofiles;
 import "google/api/annotations.proto";
 import "messages.proto";
 
+// `grpc` contains Simple service definition which can be used to communicate with Crux
+// All request and response protocol buffer message types are defined in -
+// `github.com/blk-io/chimera-api/protofiles/messages.proto`
+// Example Usage :
+//      receiveReq := protofiles.ReceiveRequest{..}
+//      conn, err = grpc.Dial(...)
+//      c := protofiles.NewClientClient(conn)
+//      resp, err:= c.Receive(context.Background(), &receiveReq)
+// This resp can be used to get the response. We can get the values in resp using `messages.proto` file
+// Eg. -> response := protofiles.ReceiveResponse{...}
+// `response` will contain the necessary information from response received from server.
+
 
 service Client {
+    // Get version of the server running
     rpc Version(ApiVersion) returns (ApiVersion) {
         option (google.api.http) = {
             post: "/version"
             body: "*"
         };
     }
-
+    // Checks if the server is running
     rpc Upcheck(UpCheckResponse) returns (UpCheckResponse) {
         option (google.api.http) = {
             post: "/upcheck"
@@ -20,10 +33,12 @@ service Client {
         };
     }
 
+    // Used to send a transaction request to Crux node
     rpc Send(SendRequest) returns (SendResponse);
-
+    // Receive response if any from node.
     rpc Receive(ReceiveRequest) returns (ReceiveResponse);
 
+    // Update the partyinfo with response from all the nodes connnected to the node
     rpc UpdatePartyInfo(PartyInfo) returns (PartyInfoResponse) {
         option (google.api.http) = {
             post: "/partyinfo"
@@ -31,6 +46,7 @@ service Client {
         };
     }
 
+    // By gossip protocol, the Crux node sends the updated transaction to all connected nodes.
     rpc Push(PushPayload) returns (PartyInfoResponse) {
         option (google.api.http) = {
             post: "/push"
