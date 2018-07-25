@@ -3,35 +3,67 @@ package protofiles;
 
 import "google/api/annotations.proto";
 
-message ApiVersion{
+option csharp_namespace = "Blkio.Chimera.Api";
+option go_package = "github.com/blk-io/chimera-api";
+option java_package = "io.blk.chimera.api";
+option java_multiple_files = true;
+
+// `messages` contains serialized protocol buffer messages used to communicate with Chimera nodes
+// The gRPC service definitions using the below proto files are defined in
+// `github.com/blk-io/chimera-api/grpc.proto` -- Refer to the same for example usage
+
+// The Apiversion on which the server is running
+message ApiVersion {
     string version = 1;
 }
-message UpCheckResponse{
+
+// The server response from an `upcheck` request
+message UpCheckResponse {
     string message = 1;
 }
+
+// Store a transaction payload
 message SendRequest{
+    // The payload of the transaction to be sent
     bytes payload = 1;
+    // The key of the Sender
     string from = 2;
+    // The keys of all the Receipients who are privy to the transaction
     repeated string to = 3;
 }
-message SendResponse{
+// Response from the server for the SendRequest
+message SendResponse {
+    // The transaction hash is returned
     bytes key = 1;
 }
-message ReceiveRequest{
+
+// Retrieve a transaction payload
+message ReceiveRequest {
+    // The transaction hash to be queried
     bytes key = 1;
+    // The Senders key
     string to = 2;
 }
-message ReceiveResponse{
+// Response for ReceiveRequest -> contains the transaction payload
+message ReceiveResponse {
     bytes payload = 1;
 }
-message PartyInfo{
+
+// Node information
+message PartyInfo {
+    // the URL identifying this node
     string url = 1;
+    // public key of the respective URL
     map<string, bytes> recipients = 2;
+    // All the URLs opf the connected nodes
     map<string, bool> parties = 3;
 }
-message PartyInfoResponse{
+// Payload consisting of the partyinfo of the connected party
+message PartyInfoResponse {
     bytes payload = 1;
 }
+
+// The Encrypted payload used to propogate the new transaction payload to other Chimera nodes
 message EncryptedPayload{
     bytes sender = 1;
     bytes cipherText = 2;
@@ -39,7 +71,9 @@ message EncryptedPayload{
     repeated bytes reciepientBoxes = 4;
     bytes reciepientNonce = 5;
 }
+// The message type to sent over to other Chimera nodes.
 message PushPayload{
     EncryptedPayload ep = 1;
+    // Encoded transaction information
     bytes encoded = 2;
 }
