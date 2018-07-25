@@ -10,13 +10,13 @@ protofiles: proto grpc
 proto:
 	$Q protoc -I protofiles/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--go_out=plugins=grpc:protofiles \
+		--go_out=plugins=grpc:. \
 		protofiles/*.proto
 
 grpc:
 	$Q protoc -I protofiles/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--grpc-gateway_out=logtostderr=true:protofiles \
+		--grpc-gateway_out=logtostderr=true:. \
 		protofiles/grpc.proto
 
 .PHONY: build
@@ -49,4 +49,4 @@ setup: clean .GOPATH/.ok
 
 clean:
 	$Q rm -rf bin .GOPATH
-	$Q rm -f protofiles/*\.pb*
+	$Q rm -f go/chimera/*
