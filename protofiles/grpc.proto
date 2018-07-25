@@ -33,9 +33,9 @@ service Client {
         };
     }
 
-    // Used to send a transaction request to Crux node
+    // Used to store a transaction in the Chimera node
     rpc Send(SendRequest) returns (SendResponse);
-    // Receive response if any from node.
+    // Retrieve a transaction from a Chimera node
     rpc Receive(ReceiveRequest) returns (ReceiveResponse);
 
     // Update the partyinfo with response from all the nodes connnected to the node
@@ -46,7 +46,7 @@ service Client {
         };
     }
 
-    // By gossip protocol, the Crux node sends the updated transaction to all connected nodes.
+    // Propogate payload to remote node
     rpc Push(PushPayload) returns (PartyInfoResponse) {
         option (google.api.http) = {
             post: "/push"
