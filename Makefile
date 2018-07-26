@@ -10,13 +10,13 @@ protofiles: protos grpc
 protos:
 	$Q protoc -I proto/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--go_out=plugins=grpc:. \
+		--go_out=plugins=grpc:chimera \
 		proto/*.proto
 
 grpc:
 	$Q protoc -I proto/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--grpc-gateway_out=logtostderr=true:. \
+		--grpc-gateway_out=logtostderr=true:chimera \
 		proto/grpc.proto
 
 .PHONY: build
