@@ -5,19 +5,19 @@ IMPORT_PATH := github.com/blk-io/chimera-api
 Q := $(if $V,,@)
 export GOPATH := $(CURDIR)/.GOPATH
 
-protofiles: proto grpc
+protofiles: protos grpc
 
-proto:
-	$Q protoc -I protofiles/ \
+protos:
+	$Q protoc -I proto/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--go_out=plugins=grpc:protofiles \
-		protofiles/*.proto
+		--go_out=plugins=grpc:. \
+		proto/*.proto
 
 grpc:
-	$Q protoc -I protofiles/ \
+	$Q protoc -I proto/ \
 		-I .GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--grpc-gateway_out=logtostderr=true:protofiles \
-		protofiles/grpc.proto
+		--grpc-gateway_out=logtostderr=true:. \
+		proto/grpc.proto
 
 .PHONY: build
 build: protofiles
@@ -49,4 +49,4 @@ setup: clean .GOPATH/.ok
 
 clean:
 	$Q rm -rf bin .GOPATH
-	$Q rm -f protofiles/*\.pb*
+	$Q rm -f ./chimera/*
