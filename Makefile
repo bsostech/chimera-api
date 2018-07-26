@@ -49,4 +49,4 @@ setup: clean .GOPATH/.ok
 
 clean:
 	$Q rm -rf bin .GOPATH
-	$Q rm -f go/chimera/*
+	$Q rm -f chimera/*
