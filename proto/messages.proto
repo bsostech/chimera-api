@@ -77,3 +77,23 @@ message PushPayload{
     // Encoded transaction information
     bytes encoded = 2;
 }
+
+message DeleteRequest {
+     bytes key = 1;
+}
+
+// ResendRequest is used to resend previous transactions.
+// There are two types of supported request.
+// 1. All transactions associated with a node, in which case the Key field should be omitted.
+// 2. A specific transaction with the given key value.
+message ResendRequest {
+    // Type is the resend request type. It should be either "all" or "individual" depending on if
+    // you want to request an individual transaction, or all transactions associated with a node.
+    string Type = 1;
+    bytes PublicKey = 2;
+    bytes Key = 3;
+}
+
+message ResendResponse {
+    bytes encoded = 1;
+}
