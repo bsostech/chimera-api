@@ -1,7 +1,7 @@
 # The import path is where your repository can be found.
 # To import subpackages, always prepend the full import path.
 # If you change this, run `make clean`. Read more: https://git.io/vM7zV
-IMPORT_PATH := github.com/blk-io/chimera-api
+IMPORT_PATH := github.com/denny60004/chimera-api
 Q := $(if $V,,@)
 export GOPATH := $(CURDIR)/.GOPATH
 
