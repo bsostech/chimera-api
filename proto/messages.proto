@@ -37,6 +37,12 @@ message SendResponse {
     bytes key = 1;
 }
 
+// Store a transaction payload locally
+message StoreRequest{
+    // The payload of the transaction to be sent
+    bytes payload = 1;
+}
+
 // Retrieve a transaction payload
 message ReceiveRequest {
     // The transaction hash to be queried
