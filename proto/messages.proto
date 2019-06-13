@@ -37,6 +37,14 @@ message SendResponse {
     bytes key = 1;
 }
 
+// Store a signed transaction payload
+message SendSignedRequest{
+    // The payload of the transaction to be sent
+    bytes payload = 1;
+    // The keys of all the Receipients who are privy to the transaction
+    repeated string to = 2;
+}
+
 // Store a transaction payload locally
 message StoreRequest{
     // The payload of the transaction to be sent

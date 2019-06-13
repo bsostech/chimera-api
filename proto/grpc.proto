@@ -44,6 +44,8 @@ service Client {
     rpc Receive(ReceiveRequest) returns (ReceiveResponse);
     // Used to store a transaction locally
     rpc StoreRaw(StoreRequest) returns (SendResponse);
+    // Used to send signed transaction to the Chimera node
+    rpc SendSignedTx(SendSignedRequest) returns (SendResponse);
 
     // Update the partyinfo with response from all the nodes connnected to the node
     rpc UpdatePartyInfo(PartyInfo) returns (PartyInfoResponse) {
