@@ -41,14 +41,14 @@ message SendResponse {
 message SendSignedRequest{
     // The payload of the transaction to be sent
     bytes payload = 1;
+    // The keys of all the Receipients who are privy to the transaction
+    repeated string to = 2;
 }
 
 // Store a transaction payload locally and return a encrypted hash
 message StoreRequest{
     // The payload of the transaction to be sent
     bytes payload = 1;
-    // The keys of all the Receipients who are privy to the transaction
-    repeated string to = 2;
 }
 
 // Retrieve a transaction payload
