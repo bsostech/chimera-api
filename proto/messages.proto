@@ -43,7 +43,7 @@ message SendSignedRequest{
     bytes payload = 1;
 }
 
-// Store a transaction payload locally
+// Store a transaction payload locally and return a encrypted hash
 message StoreRequest{
     // The payload of the transaction to be sent
     bytes payload = 1;
