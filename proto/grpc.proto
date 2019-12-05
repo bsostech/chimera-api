@@ -46,6 +46,8 @@ service Client {
     rpc StoreRaw(StoreRequest) returns (SendResponse);
     // Used to send signed transaction to the Chimera node
     rpc SendSignedTx(SendSignedRequest) returns (SendResponse);
+    // Used to get party info from Chimera node
+    rpc GetPartyInfo(PartyInfoResponse) returns (PartyInfoResponse);
 
     // Update the partyinfo with response from all the nodes connnected to the node
     rpc UpdatePartyInfo(PartyInfo) returns (PartyInfoResponse) {
